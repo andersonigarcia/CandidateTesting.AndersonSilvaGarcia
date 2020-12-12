@@ -11,14 +11,14 @@ namespace CandidateTesting.AndersonSilvaGarcia
 
             Console.Title = Constant.DescriptionTitle;
             Console.WriteLine(Constant.SubTitle);
-            Console.WriteLine(Constant.Otions);
+            Console.WriteLine(Constant.Options);
             Console.Write(Constant.InformOption);
 
             switch (Console.ReadLine())
             {
                 case "1":
                     matriz = Helper.ReadMatriz(Constant.MatrizInform);
-                    int indiceA = Helper.ReadValue(string.Format(Constant.DefaultInputIndice,"(P)"), matriz.Length);
+                    int indiceA = Helper.ReadValue(string.Format(Constant.DefaultInputIndice, "(P)"), matriz.Length);
                     int indiceB = Helper.ReadValue(string.Format(Constant.DefaultInputIndice, "(Q)"), matriz.Length);
                     adjacent = new Adjacent(matriz, indiceA, indiceB);
                     Console.WriteLine(adjacent.MaxAdjacentDistance());
@@ -28,6 +28,19 @@ namespace CandidateTesting.AndersonSilvaGarcia
                     matriz = Helper.ReadMatriz(Constant.MatrizInform);
                     adjacent = new Adjacent(matriz);
                     Console.WriteLine(adjacent.MaxDistanceAllValues());
+                    break;
+
+                case "3":
+                    //https://s3.amazonaws.com/uux-itaas-static/minha-cdn-logs/input-01.txt
+                    //c:\\temp\\arquivo.txt
+
+                    Console.Write(Constant.DescriptionUri);
+                    Uri uri = new Uri(Console.ReadLine());
+                    
+                    Console.Write(Constant.DescriptionPathTarget);
+                    var log = new Log(uri, Console.ReadLine());                                        
+                    
+                    log.CreateAgoraArchive();
                     break;
 
                 default:
