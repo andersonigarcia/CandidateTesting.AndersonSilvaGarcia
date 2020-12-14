@@ -14,28 +14,40 @@ namespace CandidateTesting.AndersonSilvaGarcia
 
         public Uri SourceUrl { get; set; }
         public string TargetPath { get; set; }
+        public string ErrorMessage { get; set; }
 
         private string ImportPath = string.Concat(AppDomain.CurrentDomain.BaseDirectory, Constant.archiveName);
 
         public bool CreateAgoraArchive()
         {
-            DownloadUriFile();
+            if (!DownloadUriFile())
+                return false;
 
-            ReadFileImportedAndWriteAgora();
+            if (!ReadFileImportedAndWriteAgora())
+                return false;
 
             return true;
         }
 
         private bool DownloadUriFile()
         {
-            using WebClient client = new WebClient();
+            try
+            {
+                using WebClient client = new WebClient();
 
-            client.DownloadFile(SourceUrl, Constant.archiveName);
+                client.DownloadFile(SourceUrl, Constant.archiveName);
+
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+                return false;
+            }
 
             return true;
         }
 
-        private void ReadFileImportedAndWriteAgora()
+        private bool ReadFileImportedAndWriteAgora()
         {
             try
             {
@@ -45,8 +57,11 @@ namespace CandidateTesting.AndersonSilvaGarcia
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.Message;
+                return false;
             }
+
+            return true;
         }
 
         private void CreateArchive()

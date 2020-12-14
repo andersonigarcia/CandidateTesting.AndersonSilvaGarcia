@@ -31,16 +31,14 @@ namespace CandidateTesting.AndersonSilvaGarcia
                     break;
 
                 case "3":
-                    //https://s3.amazonaws.com/uux-itaas-static/minha-cdn-logs/input-01.txt
-                    //c:\\temp\\arquivo.txt
-
                     Console.Write(Constant.DescriptionUri);
                     Uri uri = new Uri(Console.ReadLine());
-                    
+
                     Console.Write(Constant.DescriptionPathTarget);
-                    var log = new Log(uri, Console.ReadLine());                                        
-                    
-                    log.CreateAgoraArchive();
+                    var log = new Log(uri, Console.ReadLine());
+
+                    if (!log.CreateAgoraArchive())
+                        Console.WriteLine(log.TargetPath);
                     break;
 
                 default:
